@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 12:40:03 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/14 11:29:31 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/14 12:04:17 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ Tetro calcul_place(char **tab) // Calcul premierement la postion relative du tet
 
 char **Placement_tetris(Tetro new) //Focntion qui cree un tableau de cote * cote et y place le premier tetro.
 {
-    //Possibilites d'amelioration en envoyant une position et un tableau deja remplis pour en faire l'algorithme. // Ou se servir de cette fonction uniquement pour le premier tetro.
+
     char **tab;
     int i = 0;
     int y = 0;
@@ -117,10 +117,29 @@ char **Placement_tetris(Tetro new) //Focntion qui cree un tableau de cote * cote
         i = 0;
         y++;
     }
+    i = 0;
+
+    while (i < 4)
+    {
+      if ((p0x + new.h[i].x) >= 0 && (p0y + new.h[i].y) >= 0)
+        i++;
+      else
+        {
+          if (p0y < 2)
+            p0y++;
+          else
+          {
+            p0y = 0;
+            p0x++;
+          }
+          i = 0;
+        }
+    }
+
     /*     A FAIRE
     while (p0x < 4) // tetro depasse a gauche ou en haut
     {
-        if ((p0x + new.h[i].x) < 0 || (p0y + new.h[i].y) < 0)
+        if ((p0x + new.h[i].x) >= 0 || (p0y + new.h[i].y) >= 0)
         {
             if (p0y < 4)
                 p0y++;
