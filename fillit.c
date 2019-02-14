@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/01/21 13:59:14 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/14 11:30:19 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *tab_to_str(char **tab)
     int y;
     int s;
     char *str;
-    
+
     s = 0;
     i = 0;
     y = 0;
@@ -38,11 +38,11 @@ char *tab_to_str(char **tab)
     return(str);
 }
 
-char afficher_tab(char **tab)
+char afficher_tab(char **tab, int cote)
 {
 	int i = 0;
 
-	while (tab[i] && i < 4)
+	while (tab[i] && i < cote)
 	{
 		printf("%s\n", tab[i]);
 		i++;
@@ -77,10 +77,10 @@ while (ret > 0) //Boucle qui tourne jusqu'à ce que le fichier soit totalement l
 	}
     if(tetri_valid(tab_to_str(tab_converter(tab))) != 0) // Verifie qu'il s'agisse d'un tetrominos valide. ATTENTION: la fonction (t_c) modifie tab... PQ ? Possiblilites de cree une F qui met tous les chiffre avec la bonne lettre directement (A, B, ...)
         return(-1);
-	tab = hashtag_to_letter(tab, letter);
-    afficher_tab(Placement_tetris(calcul_place(tab)));
+	      //tab = hashtag_to_letter(tab, letter);
+    Placement_tetris(calcul_place(tab));
     //Placement_tetris(calcul_place(tab));
-    return(0); //BreakPoint temporaire
+    //return(0); //BreakPoint temporaire
 	letter++;
 	i = 0;
 }

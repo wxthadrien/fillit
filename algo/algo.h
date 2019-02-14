@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 12:43:32 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/07 13:03:17 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/14 11:21:57 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct Coordonnees
 
 typedef struct Tetro
 {
+    int p0x;
+    int p0y;
     Coordonnees h[4];
 } Tetro;
 
