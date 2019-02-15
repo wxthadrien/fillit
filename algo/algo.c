@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 12:40:03 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/14 12:04:17 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/15 10:02:20 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,15 @@ Tetro calcul_place(char **tab) // Calcul premierement la postion relative du tet
     return(position_absolue);
 }
 
-char **Placement_tetris(Tetro new) //Focntion qui cree un tableau de cote * cote et y place le premier tetro.
+char **Placement_tetris(Tetro *new, int *cotee) //Focntion qui cree un tableau de cote * cote et y place le premier tetro.
 {
 
     char **tab;
     int i = 0;
     int y = 0;
-    int p0x = 0;
-    int p0y = 0;
     int cote = 2;
 
+    *cotee = 2;
     tab = malloc(2 * sizeof(*tab));
     if (tab == NULL)
         return (NULL);
@@ -119,61 +118,49 @@ char **Placement_tetris(Tetro new) //Focntion qui cree un tableau de cote * cote
     }
     i = 0;
 
-    while (i < 4)
+    while (i < 4) //Tetro depasse a gauche ou en haut du tableau
     {
-      if ((p0x + new.h[i].x) >= 0 && (p0y + new.h[i].y) >= 0)
+      if ((new->p0x + new->h[i].x) >= 0 && (new->p0y + new->h[i].y) >= 0)
         i++;
       else
         {
-          if (p0y < 2)
-            p0y++;
+          if (new->p0y < 2)
+            new->p0y++;
           else
           {
-            p0y = 0;
-            p0x++;
+            new->p0y = 0;
+            new->p0x++;
           }
           i = 0;
         }
     }
 
-    /*     A FAIRE
-    while (p0x < 4) // tetro depasse a gauche ou en haut
-    {
-        if ((p0x + new.h[i].x) >= 0 || (p0y + new.h[i].y) >= 0)
-        {
-            if (p0y < 4)
-                p0y++;
-            else
-            {
-                p0y = 0;
-                p0x++;
-            }
-        }
-    }
-    */
+    //new->p0x = p0x;
+    //new.p0y = p0y;
 
     i = 0;
-    if ((p0x + new.h[3].x) > 1 || (p0y + new.h[3].y) > 1 || (p0y + new.h[2].y) > 1 || (p0y + new.h[2].x) > 1) // tetro trop grand pour le tableau (depasse a droit ou en bas.
+    if ((new->p0x + new->h[3].x) > 1 || (new->p0y + new->h[3].y) > 1 || (new->p0y + new->h[2].y) > 1 || (new->p0x + new->h[2].x) > 1) // tetro trop grand pour le tableau (depasse a droit ou en bas.
     {
-        if ((p0x + new.h[3].x) > 2 || (p0y + new.h[3].y) > 2)
+        if ((new->p0x + new->h[3].x) > 2 || (new->p0y + new->h[3].y) > 2)
         {
             cote = 4;
             tab = Agrandir_cote(tab, 4); // Fonction free le tableau et en recree un de 4 de cote avec des . dedans.
+            *cotee = 4;
         }
         else
         {
             cote = 3;
             tab = Agrandir_cote(tab, 3);
+            *cotee = 3;
         }
         i = 0;
     }
     i = 0;
     while (i <  4)
     {
-        tab[p0x + new.h[i].x][p0y + new.h[i].y] = '#';
+        tab[new->p0x + new->h[i].x][new->p0y + new->h[i].y] = '#';
         i++;
     }
-    afficher_tab(tab, cote);
     return(tab);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/14 11:30:19 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/15 09:58:53 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int		fd;
 char 	*line;
 char	**tab;
 int		ret = 1;
-char    letter = 'A';
+char  letter = 0;
+Tetro tetro[26];
+int   cote = 0;
 
 char *n = "\n";
 tab = malloc(sizeof(char*) * 27);
@@ -78,7 +80,10 @@ while (ret > 0) //Boucle qui tourne jusqu'à ce que le fichier soit totalement l
     if(tetri_valid(tab_to_str(tab_converter(tab))) != 0) // Verifie qu'il s'agisse d'un tetrominos valide. ATTENTION: la fonction (t_c) modifie tab... PQ ? Possiblilites de cree une F qui met tous les chiffre avec la bonne lettre directement (A, B, ...)
         return(-1);
 	      //tab = hashtag_to_letter(tab, letter);
-    Placement_tetris(calcul_place(tab));
+    tetro[letter] = calcul_place(tab);
+    tab = Placement_tetris(&tetro[letter], &cote);
+    printf("%d\n", cote);
+    afficher_tab(tab, cote);
     //Placement_tetris(calcul_place(tab));
     //return(0); //BreakPoint temporaire
 	letter++;
