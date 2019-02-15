@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 12:40:03 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/15 10:02:20 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/15 14:42:34 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,41 @@ char **free_tab(char **tab, int n)
     free(tab);
     tab = NULL;
     return (tab);
+}
+
+char **Copier_Agrandir(char **tab, int cote)
+{
+    int i = 0;
+    int y = 0;
+    char **new_tab;
+
+    new_tab = malloc(cote * sizeof(*new_tab));
+    if (new_tab == NULL)
+        return (NULL);
+    while(i < cote) // Boucle pour l'allocation du tableau.
+    {
+        new_tab[i] = malloc((cote + 1) * sizeof(**new_tab));
+        i++;
+    }
+    i = 0;
+    while(y < cote)
+    {
+        while(i < cote)
+        {
+          if (i < (cote - 1) && y < (cote - 1))
+          {
+            if (tab[y][i] == '#')
+              new_tab[y][i] = '#';
+            else
+              new_tab[y][i] = '.';
+          }
+          else
+            new_tab[y][i] = '.';
+            i++;
+        }
+        i = 0;
+        y++;
+    }
+    free_tab(tab, (cote - 1));
+    return (new_tab);
 }

@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:03:17 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/14 11:29:41 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/15 15:36:43 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,4 @@
 char afficher_tab(char **tab, int cote);
 int main(int argc, char **argv);
 char *tab_to_str(char **tab);
+char **Copier_Agrandir(char **tab, int cote);

@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/15 09:58:53 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/15 16:02:04 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		fd;
 char 	*line;
 char	**tab;
 int		ret = 1;
-char  letter = 0;
+int  letter = 0;
 Tetro tetro[26];
 int   cote = 0;
 
@@ -82,8 +82,16 @@ while (ret > 0) //Boucle qui tourne jusqu'à ce que le fichier soit totalement l
 	      //tab = hashtag_to_letter(tab, letter);
     tetro[letter] = calcul_place(tab);
     tab = Placement_tetris(&tetro[letter], &cote);
-    printf("%d\n", cote);
-    afficher_tab(tab, cote);
+
+
+    while (backtraking(&tab, &tetro, &cote, letter) == -1)
+    {
+      cote++;
+      tab = Copier_Agrandir(tab, cote);
+    }
+
+
+    //afficher_tab(tab, cote);
     //Placement_tetris(calcul_place(tab));
     //return(0); //BreakPoint temporaire
 	letter++;
