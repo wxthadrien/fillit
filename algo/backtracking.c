@@ -43,5 +43,14 @@ int backtraking(char *tab, Tetro *new[], int *cote, char num)
 
 int check_place(Tetro new, char **tab)
 {
+  int i;
 
+  i = 0;
+  while (tab[new.h[i].x + p0x][new.h[i].x + p0y] && i < 4)
+  {
+    i++;
+    if (i == 4)
+      return(1);
+  }
+  return(-1);
 }
