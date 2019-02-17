@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 12:43:32 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/15 16:01:34 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/17 17:18:37 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ Tetro calcul_place(char **tab);
 char **Placement_tetris(Tetro *new, int *cotee);
 char **Agrandir_cote(char **tab, int cote);
 char **free_tab(char **tab, int n);
-int backtraking(char **tab, Tetro *new[], int *cote, char num);
-int check_place(Tetro new, char **tab);
+int backtraking(char ***tab, Tetro **new, int *cote, int num);
+int check_place(Tetro new, char ***tab, int cote);

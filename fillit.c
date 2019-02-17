@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/15 16:02:04 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/02/17 17:22:54 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ return (1);
 
 int main(int argc, char **argv) // fonction principal qui lis le fichier, place le tetro dans un tableau, verifie la validité du tetro et appelle l'algorithme de resolution. ATTENTION segfault avec plusieur tetri
 {
-int 	i;
+int 	i = 0;
 int		fd;
 char 	*line;
 char	**tab;
 int		ret = 1;
 int  letter = 0;
-Tetro tetro[26];
+Tetro *tetro;
 int   cote = 0;
+
+tetro = malloc(sizeof(Tetro*) * 27);
 
 char *n = "\n";
 tab = malloc(sizeof(char*) * 27);
@@ -83,17 +85,16 @@ while (ret > 0) //Boucle qui tourne jusqu'à ce que le fichier soit totalement l
     tetro[letter] = calcul_place(tab);
     tab = Placement_tetris(&tetro[letter], &cote);
 
-
     while (backtraking(&tab, &tetro, &cote, letter) == -1)
     {
       cote++;
       tab = Copier_Agrandir(tab, cote);
     }
 
-
+    afficher_tab(tab, cote);
     //afficher_tab(tab, cote);
     //Placement_tetris(calcul_place(tab));
-    //return(0); //BreakPoint temporaire
+    return(0); //BreakPoint temporaire
 	letter++;
 	i = 0;
 }
