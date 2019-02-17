@@ -37,7 +37,7 @@ char *tab_to_str(char **tab)
     str[s] = '\0';
     return(str);
 }
-
+//beet
 char afficher_tab(char **tab, int cote)
 {
 	int i = 0;
