@@ -72,60 +72,100 @@ char	ft_afficher_tab(char **tab, int cote)
 		i++;
 	}
 	i = 0;
-	return (1);
+	return (0);
 }
 
-int		main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-  t_stock	var = {0, 0, 0, 1, 0, 0};
-	char	*line;
+	t_stock var = {0, 0, 1, 0, 0};
+	char 	*line;
 	char	**tab;
-	t_tetro	*tetro;
-	char	**tetro_read;
+	t_tetro *tetro;
+	char **tetro_read;
 
-	if (!(tetro = malloc(sizeof(t_tetro*) * 27)))
-    return (-1);
-	if (!(tab = malloc(sizeof(char*) * 27)))
-    return (-1);
-	if (!(tetro_read = malloc(sizeof(char*) * 5)))
-    return (-1);
+	tetro = malloc(sizeof(t_tetro*) * 27);
+	char *n = "\n";
+	tab = malloc(sizeof(char*) * 27);
+	tetro_read = malloc(sizeof(char*) * 5);
 	var.fd = open(argv[1], O_RDONLY);
-	var.no = ft_number_of_tetro(var.fd);
+	var.noot = ft_number_of_tetro(var.fd);
 	close(var.fd);
 	var.fd = open(argv[1], O_RDONLY);
+	ft_god(var, line, tab, tetro, tetro_read);
+	/*
+		while (var.ret > 0)
+		{
+	  	while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) > 2)
+			{
+				ft_test(line, tetro_read, var.i);
+				var.i++;
+			}
+			ft_is_valid(tetro_read);
+	  	tetro[var.letter] = ft_calcul_place(tetro_read);
+			while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
+	  	{
+	    	var.cote++;
+	    	tab = ft_copier_agrandir(tab, var.cote);
+	    	ft_clean_struct(tetro, var.letter);
+	    	var.i = 0;
+	  		while(var.i < var.letter)
+	    	{
+	      	ft_backtraking(&tab, tetro, &var.cote, var.i);
+	      	var.i++;
+	    	}
+	  	}
+	    	if (var.letter == var.noot - 1)
+	      	ft_afficher_tab(tab, var.cote);
+			var.letter++;
+			var.i = 0;
+		}*/
+	close(var.fd);
+	return(0);
+	}
+
+int ft_test(char *line, char **tetro_read, int i)
+{
+	if (ft_vali_tab(line) == -1)
+		return (-1);
+	if(!(tetro_read[i] = ft_strdup(line)))
+		return (-1);
+	return(1);
+}
+
+int ft_is_valid(char **tetro_read)
+{
+	if(ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
+			return(-1);
+	return(1);
+}
+
+int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_read)
+{
 	while (var.ret > 0)
 	{
 		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) > 2)
 		{
-			if (ft_vali_tab(line) == -1)
-				return (-1);
-			if (!(tetro_read[var.i] = ft_strdup(line)))
-				return (-1);
+			ft_test(line, tetro_read, var.i);
 			var.i++;
 		}
-		if (ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
-			return(-1);
+		ft_is_valid(tetro_read);
 		tetro[var.letter] = ft_calcul_place(tetro_read);
-    while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
+		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
 		{
 			var.cote++;
 			tab = ft_copier_agrandir(tab, var.cote);
 			ft_clean_struct(tetro, var.letter);
 			var.i = 0;
-			while (var.i < var.letter)
+			while(var.i < var.letter)
 			{
 				ft_backtraking(&tab, tetro, &var.cote, var.i);
 				var.i++;
 			}
 		}
-		if (var.letter == var.no - 1)
-		{
-			ft_afficher_tab(tab, var.cote);
-			return (0);
-		}
+			if (var.letter == var.noot - 1)
+				ft_afficher_tab(tab, var.cote);
 		var.letter++;
 		var.i = 0;
 	}
-	close(var.fd);
-	return (0);
+	return(0);
 }

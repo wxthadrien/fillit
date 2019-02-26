@@ -35,4 +35,5 @@ char				**ft_free_tab(char **tab, int n);
 int					ft_backtraking(char ***tab, t_tetro *new, int *cote,
 					int num);
 int					ft_check_place(t_tetro new, char **tab, int cote);
+int ft_back(char **tab, int cote, t_tetro *tetro, int letter);
 #endif
