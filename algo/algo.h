@@ -28,6 +28,14 @@ typedef struct		s_tetro
 	t_coordonnees	h[4];
 }					t_tetro;
 
+typedef struct		s_calcul
+{
+	int	x;
+	int	y;
+	int	p;
+	int i;
+}					t_calcul;
+
 char				ft_hashtag_to_letter(char c);
 t_tetro				ft_calcul_place(char **tab);
 char				**ft_agrandir_cote(char **tab, int cote);
@@ -36,4 +44,5 @@ int					ft_backtraking(char ***tab, t_tetro *new, int *cote,
 					int num);
 int					ft_check_place(t_tetro new, char **tab, int cote);
 int ft_back(char **tab, int cote, t_tetro *tetro, int letter);
+t_tetro ft_pos(t_calcul pos, t_tetro position_tetro, t_tetro	position_absolue);
 #endif

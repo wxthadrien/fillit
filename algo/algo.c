@@ -24,38 +24,43 @@ t_tetro		ft_calcul_place(char **tab)
 {
 	t_tetro	position_tetro = {0, 0};
 	t_tetro	position_absolue = {0, 0};
-	int	x;
-	int	y;
-	int	p;
+	t_calcul pos = {0, 0, 0, 0};
 
-	x = 0;
-	y = 0;
-	p = 0;
-	while (x < 4)
+	while (pos.x < 4)
 	{
-		while (y < 4)
+		while (pos.y < 4)
 		{
-			if (tab[x][y] == '.')
-				y++;
+			if (tab[pos.x][pos.y] == '.')
+				pos.y++;
 			else
 			{
-				position_tetro.h[p].x = x;
-				position_tetro.h[p].y = y;
-				y++;
-				p++;
+				position_tetro.h[pos.p].x = pos.x;
+				position_tetro.h[pos.p].y = pos.y;
+				pos.y++;
+				pos.p++;
 			}
 		}
-		y = 0;
-		x++;
+		pos.y = 0;
+		pos.x++;
 	}
-	position_absolue.h[0].x = 0;
-	position_absolue.h[1].x = position_tetro.h[1].x - position_tetro.h[0].x;
-	position_absolue.h[2].x = position_tetro.h[2].x - position_tetro.h[0].x;
-	position_absolue.h[3].x = position_tetro.h[3].x - position_tetro.h[0].x;
-	position_absolue.h[0].y = 0;
-	position_absolue.h[1].y = position_tetro.h[1].y - position_tetro.h[0].y;
-	position_absolue.h[2].y = position_tetro.h[2].y - position_tetro.h[0].y;
-	position_absolue.h[3].y = position_tetro.h[3].y - position_tetro.h[0].y;
+	return(ft_pos(pos, position_tetro, position_absolue));
+}
+
+t_tetro ft_pos(t_calcul pos, t_tetro position_tetro, t_tetro	position_absolue)
+{
+	while (pos.i < 4)
+	{
+		position_absolue.h[pos.i].x = 0;
+		position_absolue.h[pos.i].x = position_tetro.h[pos.i].x - position_tetro.h[0].x;
+		pos.i++;
+	}
+	pos.i = 0;
+	while (pos.i < 4)
+	{
+		position_absolue.h[pos.i].y = 0;
+		position_absolue.h[pos.i].y = position_tetro.h[pos.i].y - position_tetro.h[0].y;
+		pos.i++;
+	}
 	position_absolue.p0x = 0;
 	position_absolue.p0y = 0;
 	return (position_absolue);
@@ -69,12 +74,12 @@ char		**ft_agrandir_cote(char **tab, int cote)
 	i = 0;
 	y = 0;
 	ft_free_tab(tab, (2));
-	tab = malloc(cote * sizeof(*tab));
-	if (tab == NULL)
+	if(!(tab = malloc(cote * sizeof(*tab))))
 		return (NULL);
 	while (i < cote)
 	{
-		tab[i] = malloc((cote + 1) * sizeof(**tab));
+		if(!(tab[i] = malloc((cote + 1) * sizeof(**tab))))
+			return (NULL);
 		i++;
 	}
 	i = 0;
@@ -96,6 +101,8 @@ char		**ft_free_tab(char **tab, int n)
 	int i;
 
 	i = 0;
+	if(tab == NULL)
+		return (NULL);
 	while (i < n)
 	{
 		free(tab[i]);
@@ -115,12 +122,12 @@ char		**ft_copier_agrandir(char **tab, int cote)
 
 	i = 0;
 	y = 0;
-	new_tab = malloc(cote * sizeof(*new_tab));
-	if (new_tab == NULL)
+	if(!(new_tab = malloc(cote * sizeof(*new_tab))))
 		return (NULL);
 	while (i < cote)
 	{
-		new_tab[i] = malloc((cote + 1) * sizeof(**new_tab));
+		if(!(new_tab[i] = malloc((cote + 1) * sizeof(**new_tab))))
+			return (NULL);
 		i++;
 	}
 	i = 0;

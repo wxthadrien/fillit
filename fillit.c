@@ -18,7 +18,8 @@ int		ft_number_of_tetro(int fd)
 	int		ret;
 	char	*buff;
 
-	buff = malloc(sizeof(char*) * 700);
+	if(!(buff = malloc(sizeof(char*) * 700)))
+		return (-1);
 	i = read(fd, buff, 700);
 	ret = -((-i - 1) / 21);
 	free(buff);
@@ -45,7 +46,8 @@ char	*ft_tab_to_str(char **tab)
 	s = 0;
 	i = 0;
 	y = 0;
-	str = malloc(sizeof(char *) * 17);
+	if(!(str = malloc(sizeof(char *) * 17)))
+		return (NULL);
 	while (y < 4)
 	{
 		while (i < 4)
@@ -116,7 +118,10 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 				ft_backtraking(&tab, tetro, &var.cote, var.i++);
 		}
 			if (var.letter == var.noot - 1)
+			{
 				ft_afficher_tab(tab, var.cote);
+				ft_free_tab(tab, var.cote);
+			}
 		var.letter++;
 		var.i = 0;
 	}

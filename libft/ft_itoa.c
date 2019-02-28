@@ -31,10 +31,11 @@ char	*ft_itoa(int n)
 	ret[i++] = '0' + neg * n;
 	if (neg < 0)
 		ret[i++] = '-';
-	if ((r = (char *)malloc(sizeof(char) * i + 1)) == NULL)
+	if (!(r = (char *)malloc(sizeof(char) * i + 1)))
 		return (NULL);
 	r[i] = '\0';
 	while (i--)
 		r[i] = ret[j++];
+
 	return (r);
 }

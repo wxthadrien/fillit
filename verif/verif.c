@@ -65,6 +65,8 @@ char	ft_str_to_char(char *str)
 	char	c;
 
 	c = str[0];
+	free(str);
+	str = NULL;
 	return (c);
 }
 

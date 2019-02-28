@@ -36,6 +36,10 @@ int		ft_tetri_valid(char *tab)
 		x++;
 	}
 	if (number != 4 || point != 12 || ok == 0 || ft_strlen(tab) != 16)
+	{
+		free(tab);
 		return (-1);
+	}
+	free(tab);
 	return (0);
 }
