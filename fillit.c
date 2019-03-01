@@ -85,15 +85,15 @@ int main(int argc, char **argv)
 	t_tetro *tetro;
 	char **tetro_read;
 
-	if(!(tab = malloc(sizeof(char*) * 27)))
+	var.fd = open(argv[1], O_RDONLY);
+	var.noot = ft_number_of_tetro(var.fd);
+	close(var.fd);
+	if(!(tab = malloc(sizeof(char*) * var.noot)))
 		return(-1);
 	if(!(tetro = malloc(sizeof(t_tetro*) * 27)))
 		return(-1);
 	if(!(tetro_read = malloc(sizeof(char*) * 5)))
 		return(-1);
-	var.fd = open(argv[1], O_RDONLY);
-	var.noot = ft_number_of_tetro(var.fd);
-	close(var.fd);
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
@@ -105,9 +105,13 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 	while (var.ret > 0)
 	{
 		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) > 2)
+		{
 			ft_test(line, tetro_r, var.i++);
+			//free(line);
+		}
 		ft_is_valid(tetro_r);
 		tetro[var.letter] = ft_calcul_place(tetro_r);
+		//ft_free_tab(tetro_r, 27);
 		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
 		{
 			var.cote++;
