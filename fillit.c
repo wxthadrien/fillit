@@ -6,19 +6,19 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/22 17:04:30 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/01 14:15:19 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		ft_number_of_tetro(int fd)
+int				ft_number_of_tetro(int fd)
 {
-	int		i;
-	int		ret;
-	char	*buff;
+	int			i;
+	int			ret;
+	char		*buff;
 
-	if(!(buff = malloc(sizeof(char*) * 700)))
+	if (!(buff = malloc(sizeof(char*) * 700)))
 		return (-1);
 	i = read(fd, buff, 700);
 	ret = -((-i - 1) / 21);
@@ -26,7 +26,7 @@ int		ft_number_of_tetro(int fd)
 	return (ret);
 }
 
-void	ft_clean_struct(t_tetro *tetro, int num)
+void			ft_clean_struct(t_tetro *tetro, int num)
 {
 	while (num >= 0)
 	{
@@ -36,17 +36,17 @@ void	ft_clean_struct(t_tetro *tetro, int num)
 	}
 }
 
-char	*ft_tab_to_str(char **tab)
+char			*ft_tab_to_str(char **tab)
 {
-	int		i;
-	int		y;
-	int		s;
-	char	*str;
+	int			i;
+	int			y;
+	int			s;
+	char		*str;
 
 	s = 0;
 	i = 0;
 	y = 0;
-	if(!(str = malloc(sizeof(char *) * 17)))
+	if (!(str = malloc(sizeof(char *) * 17)))
 		return (NULL);
 	while (y < 4)
 	{
@@ -63,9 +63,9 @@ char	*ft_tab_to_str(char **tab)
 	return (str);
 }
 
-char	ft_afficher_tab(char **tab, int cote)
+char			ft_afficher_tab(char **tab, int cote)
 {
-	int i;
+	int			i;
 
 	i = 0;
 	while (tab[i] && i < cote)
@@ -77,30 +77,30 @@ char	ft_afficher_tab(char **tab, int cote)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_stock var = {0, 0, 1, 0, 0};
-	char 	*line;
-	char	**tab;
-	t_tetro *tetro;
-	char **tetro_read;
+	t_stock 	var = {0, 0, 1, 0, 0};
+	char			*line;
+	char			**tab;
+	t_tetro		*tetro;
+	char			**tetro_read;
 
 	var.fd = open(argv[1], O_RDONLY);
 	var.noot = ft_number_of_tetro(var.fd);
 	close(var.fd);
-	if(!(tab = malloc(sizeof(char*) * var.noot)))
-		return(-1);
-	if(!(tetro = malloc(sizeof(t_tetro*) * 27)))
-		return(-1);
-	if(!(tetro_read = malloc(sizeof(char*) * 5)))
-		return(-1);
+	if (!(tab = malloc(sizeof(char*) * var.noot)))
+		return (-1);
+	if (!(tetro = malloc(sizeof(t_tetro*) * 27)))
+		return (-1);
+	if (!(tetro_read = malloc(sizeof(char*) * 5)))
+		return (-1);
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
 	return(0);
 }
 
-int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
+int	ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 {
 	while (var.ret > 0)
 	{
@@ -118,7 +118,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			tab = ft_copier_agrandir(tab, var.cote);
 			ft_clean_struct(tetro, var.letter);
 			var.i = 0;
-			while(var.i < var.letter)
+			while (var.i < var.letter)
 				ft_backtraking(&tab, tetro, &var.cote, var.i++);
 		}
 			if (var.letter == var.noot - 1)
@@ -129,21 +129,21 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 		var.letter++;
 		var.i = 0;
 	}
-	return(0);
+	return (0);
 }
 
-int ft_test(char *line, char **tetro_read, int i)
+int				ft_test(char *line, char **tetro_read, int i)
 {
 	if (ft_vali_tab(line) == -1)
 		return (-1);
-	if(!(tetro_read[i] = ft_strdup(line)))
+	if (!(tetro_read[i] = ft_strdup(line)))
 		return (-1);
-	return(1);
+	return (1);
 }
 
-int ft_is_valid(char **tetro_read)
+int				ft_is_valid(char **tetro_read)
 {
-	if(ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
-			return(-1);
-	return(1);
+	if (ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
+			return (-1);
+	return (1);
 }
