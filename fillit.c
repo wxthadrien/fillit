@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
-	free(tetro);
+	//free(tetro);
 	return(0);
 }
 
@@ -112,8 +112,8 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			return (0);
 		tetro[var.letter] = ft_calcul_place(tetro_r);
 		//ft_free_tab(tetro_r, 2);
-		ft_afficher_tab(tetro_r, 4);
-		printf("ok\n");
+		//ft_afficher_tab(tetro_r, 4);
+		//printf("ok\n");
 		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
 		{
 			var.cote++;
