@@ -149,6 +149,6 @@ char		**ft_copier_agrandir(char **tab, int cote)
 		i = 0;
 		y++;
 	}
-	ft_free_tab(tab, (cote - 1));
+	ft_free_tab(tab, cote - 1);
 	return (new_tab);
 }
