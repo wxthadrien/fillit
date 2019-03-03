@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/03 14:29:31 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/03 14:54:28 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int main(int argc, char **argv)
 	close(var.fd);
 	if(!(tab = malloc(sizeof(char*) * var.noot)))
 		return(-1);
-	if(!(tetro = malloc(sizeof(t_tetro*) * 27)))
-		return(-1);
+	//if(!(tetro = malloc(sizeof(t_tetro*) * 27)))
+		//return(-1);
 	//if(!(tetro_read = malloc(sizeof(char*) * 5)))
 		//return(-1);
 		//printf("tab = %p\n", tab);
@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 		//printf("tetro_r de [i] vaut :%s\n", tetro_read[i]);
 		i++;
 	}
-	free(tetro);
+	//free(tetro);
 	return(0);
 }
 
@@ -180,14 +180,12 @@ int ft_test(char *line, char **tetro_read, int i)
 {
 	if (ft_vali_tab(line) == -1)
 	{
-		ft_putendl("error");
-		free(line);
-		line = NULL;
+		ft_putendl("error1");
 		return (-1);
 	}
 	if(!(tetro_read[i] = ft_strdup(line)))
 	{
-		ft_putendl("error");
+		ft_putendl("error2");
 		ft_tetro_read_free(tetro_read);
 		free(line);
 		line = NULL;
@@ -201,8 +199,7 @@ int ft_is_valid(char **tetro_read)
 {
 	if(ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
 	{
-		ft_putendl("error");
-		free(tetro_read);
+		ft_putendl("error3");
 		return (-1);
 	}
 	return(1);
