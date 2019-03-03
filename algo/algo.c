@@ -46,7 +46,7 @@ t_tetro		ft_calcul_place(char **tab)
 	return(ft_pos(pos, position_tetro, position_absolue));
 }
 
-t_tetro ft_pos(t_calcul pos, t_tetro position_tetro, t_tetro	position_absolue)
+t_tetro ft_pos(t_calcul pos, t_tetro position_tetro, t_tetro position_absolue)
 {
 	while (pos.i < 4)
 	{

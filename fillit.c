@@ -77,6 +77,22 @@ char	ft_afficher_tab(char **tab, int cote)
 	return (0);
 }
 
+int ft_tetro_read_free(char **tetro_read)
+{
+		int i;
+
+		i = 0;
+		while(tetro_read[i])
+		{
+			free(tetro_read[i]);
+			tetro_read[i] = NULL;
+			i++;
+		}
+		//free(tetro_read);
+		//tetro_read = NULL;
+		return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_stock var = {0, 0, 1, 0, 0};
@@ -84,6 +100,7 @@ int main(int argc, char **argv)
 	char	**tab;
 	t_tetro *tetro;
 	char **tetro_read;
+	int i = 0;
 
 	var.fd = open(argv[1], O_RDONLY);
 	var.noot = ft_number_of_tetro(var.fd);
@@ -94,10 +111,20 @@ int main(int argc, char **argv)
 		return(-1);
 	if(!(tetro_read = malloc(sizeof(char*) * 5)))
 		return(-1);
+		printf("tab = %p\n", tab);
+		printf("tetro = %p\n", tetro);
+		printf("tetro_read = %p\n", tetro_read);
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
-	//free(tetro);
+	//free(line);
+	ft_tetro_read_free(tetro_read);
+	while(i < 6)
+	{
+		printf("tetro_r de [i] vaut :%s\n", tetro_read[i]);
+		i++;
+	}
+	free(tetro);
 	return(0);
 }
 
@@ -106,13 +133,22 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 	while (var.ret > 0)
 	{
 		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) > 2)
+		{
 			if (ft_test(line, tetro_r, var.i++) == -1)
-				return(0);
+			{
+				free(line);
+				line = NULL;
+				return(-1);
+			}
+			free(line);
+			line = NULL;
+		}
+		free(line);
+		line = NULL;
 		if (ft_is_valid(tetro_r) == -1)
-			return (0);
+			return (-1);
 		tetro[var.letter] = ft_calcul_place(tetro_r);
-		//ft_free_tab(tetro_r, 2);
-		//ft_afficher_tab(tetro_r, 4);
+		ft_tetro_read_free(tetro_r);
 		//printf("ok\n");
 		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
 		{
@@ -122,6 +158,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			var.i = 0;
 			while(var.i < var.letter)
 				ft_backtraking(&tab, tetro, &var.cote, var.i++);
+
 		}
 			if (var.letter == var.noot - 1)
 			{
@@ -131,8 +168,9 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 		var.letter++;
 		var.i = 0;
 	}
-	ft_free_tab(tetro_r, 5);
-	free(tetro);
+
+	ft_tetro_read_free(tetro_r);
+	//ft_afficher_tab(tetro_r, 5);
 	tetro = NULL;
 	return(0);
 }
@@ -143,15 +181,18 @@ int ft_test(char *line, char **tetro_read, int i)
 	{
 		ft_putendl("error");
 		free(line);
+		line = NULL;
 		return (-1);
 	}
 	if(!(tetro_read[i] = ft_strdup(line)))
 	{
-		ft_free_tab(tetro_read, 4);
+		ft_putendl("error");
+		ft_tetro_read_free(tetro_read);
 		free(line);
+		line = NULL;
 		return (-1);
 	}
-	free(line);
+	//ft_tetro_read_free(tetro_read);
 	return(1);
 }
 
@@ -160,6 +201,7 @@ int ft_is_valid(char **tetro_read)
 	if(ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
 	{
 		ft_putendl("error");
+		free(tetro_read);
 		return (-1);
 	}
 	return(1);

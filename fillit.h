@@ -42,4 +42,5 @@ int					ft_number_of_tetro(int fd);
 int         ft_test(char *line, char **tetro_read, int i);
 int         ft_is_valid(char **tetro_read);
 int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r);
+int ft_tetro_read_free(char **tetro_read);
 #endif
