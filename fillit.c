@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/22 17:04:30 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/03 14:29:31 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ char	ft_afficher_tab(char **tab, int cote)
 
 int ft_tetro_read_free(char **tetro_read)
 {
+
 		int i;
 
 		i = 0;
-		while(tetro_read[i])
+		while(i < 4)
 		{
 			free(tetro_read[i]);
 			tetro_read[i] = NULL;
@@ -99,7 +100,7 @@ int main(int argc, char **argv)
 	char 	*line;
 	char	**tab;
 	t_tetro *tetro;
-	char **tetro_read;
+	char *tetro_read[5];
 	int i = 0;
 
 	var.fd = open(argv[1], O_RDONLY);
@@ -109,11 +110,11 @@ int main(int argc, char **argv)
 		return(-1);
 	if(!(tetro = malloc(sizeof(t_tetro*) * 27)))
 		return(-1);
-	if(!(tetro_read = malloc(sizeof(char*) * 5)))
-		return(-1);
-		printf("tab = %p\n", tab);
-		printf("tetro = %p\n", tetro);
-		printf("tetro_read = %p\n", tetro_read);
+	//if(!(tetro_read = malloc(sizeof(char*) * 5)))
+		//return(-1);
+		//printf("tab = %p\n", tab);
+		//printf("tetro = %p\n", tetro);
+		//printf("tetro_read = %p\n", tetro_read);
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
@@ -121,7 +122,7 @@ int main(int argc, char **argv)
 	ft_tetro_read_free(tetro_read);
 	while(i < 6)
 	{
-		printf("tetro_r de [i] vaut :%s\n", tetro_read[i]);
+		//printf("tetro_r de [i] vaut :%s\n", tetro_read[i]);
 		i++;
 	}
 	free(tetro);
