@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 12:40:03 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/22 15:15:49 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/03 15:51:20 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_tetro ft_pos(t_calcul pos, t_tetro position_tetro, t_tetro position_absolue)
 	position_absolue.p0y = 0;
 	return (position_absolue);
 }
-
+/*
 char		**ft_agrandir_cote(char **tab, int cote)
 {
 	int i;
@@ -95,14 +95,17 @@ char		**ft_agrandir_cote(char **tab, int cote)
 	}
 	return (tab);
 }
+*/
 
-char		**ft_free_tab(char **tab, int n)
+void			ft_free_tab(char **tab, int n)
 {
 	int i;
 
+	if (n == 0 || n == -1)
+		return ;
 	i = 0;
 	if(tab == NULL)
-		return (NULL);
+		return ;
 	while (i < n)
 	{
 		free(tab[i]);
@@ -111,7 +114,6 @@ char		**ft_free_tab(char **tab, int n)
 	}
 	free(tab);
 	tab = NULL;
-	return (tab);
 }
 
 char		**ft_copier_agrandir(char **tab, int cote)
