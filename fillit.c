@@ -118,13 +118,20 @@ int main(int argc, char **argv)
 int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 {
 	int i;
+	int y;
+
 	i = 0;
+	y = 0;
 	while (var.ret > 0)
 	{
 		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) == 4)
 		{
 			i = 1;
-
+			if (y == 4)
+			{
+				ft_putendl("error");
+				return(-1);
+			}
 			if (ft_test(line, tetro_r, var.i++, tab, var.cote) == -1)
 			{
 				free(line);
@@ -133,16 +140,18 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			}
 			free(line);
 			line = NULL;
+			y++;
 		}
+		y = 0;
 		if (var.ret == -1)
 		{
-			ft_putendl("fichier incorect");
+			ft_putendl("error");
 			return(-1);
 		}
 
 		if (i == 0)
 		{
-			printf("Ya une couille\n");
+			ft_putendl("error");
 			free(line);
 			line = NULL;
 			ft_free_tab(tab, var.cote);
@@ -152,7 +161,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 		{
 			if (ft_strlen(line) != 0)
 			{
-				printf("error de blank line\n");
+				ft_putendl("error");
 				free(line);
 				line = NULL;
 				ft_free_tab(tab, var.cote);
@@ -195,18 +204,18 @@ int ft_test(char *line, char **tetro_read, int i, char **tab, int cote)
 {
 	if (ft_strlen(line) != 4)
 	{
-		printf("error 5\n");
+		printf("error");
 		return(-1);
 	}
 	if (ft_vali_tab(line) == -1)
 	{
-		ft_putendl("error1");
+		ft_putendl("error");
 		ft_free_tab(tab, cote);
 		return (-1);
 	}
 	if(!(tetro_read[i] = ft_strdup(line)))
 	{
-		ft_putendl("error2");
+		ft_putendl("error");
 		ft_tetro_read_free(tetro_read);
 		free(line);
 		line = NULL;
@@ -219,7 +228,7 @@ int ft_is_valid(char **tetro_read)
 {
 	if(ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
 	{
-		ft_putendl("error3");
+		ft_putendl("error");
 		return (-1);
 	}
 	return(1);
