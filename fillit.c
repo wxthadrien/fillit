@@ -6,13 +6,11 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/03 15:57:05 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/04 12:57:04 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-//Retrecir ft_god, backtraking et copier agrandir.
 
 int		ft_number_of_tetro(int fd)
 {
@@ -101,10 +99,13 @@ int main(int argc, char **argv)
 	char	**tab;
 	t_tetro *tetro;
 	char *tetro_read[5];
+	int i = 0;
 
 	var.fd = open(argv[1], O_RDONLY);
 	var.noot = ft_number_of_tetro(var.fd);
 	close(var.fd);
+	if(!(tab = malloc(sizeof(char*) * var.noot)))
+		return(-1);
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
@@ -152,7 +153,6 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 		var.letter++;
 		var.i = 0;
 	}
-
 	ft_tetro_read_free(tetro_r);
 	tetro = NULL;
 	return(0);
@@ -162,17 +162,18 @@ int ft_test(char *line, char **tetro_read, int i)
 {
 	if (ft_vali_tab(line) == -1)
 	{
-		ft_putendl("error");
+		ft_putendl("error1");
 		return (-1);
 	}
 	if(!(tetro_read[i] = ft_strdup(line)))
 	{
-		ft_putendl("error");
+		ft_putendl("error2");
 		ft_tetro_read_free(tetro_read);
 		free(line);
 		line = NULL;
 		return (-1);
 	}
+	//ft_tetro_read_free(tetro_read);
 	return(1);
 }
 
@@ -180,7 +181,7 @@ int ft_is_valid(char **tetro_read)
 {
 	if(ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
 	{
-		ft_putendl("error");
+		ft_putendl("error3");
 		return (-1);
 	}
 	return(1);
