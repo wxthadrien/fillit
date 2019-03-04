@@ -70,6 +70,7 @@ char	ft_afficher_tab(char **tab, int cote)
 	i = 0;
 	while (tab[i] && i < cote)
 	{
+		tab[i][cote] = '\0';
 		ft_putendl(tab[i]);
 		i++;
 	}
@@ -79,7 +80,6 @@ char	ft_afficher_tab(char **tab, int cote)
 
 int ft_tetro_read_free(char **tetro_read)
 {
-
 		int i;
 
 		i = 0;
@@ -124,6 +124,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 	y = 0;
 	while (var.ret > 0)
 	{
+		i = 0;
 		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) == 4)
 		{
 			i = 1;
@@ -154,7 +155,6 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			ft_putendl("error");
 			free(line);
 			line = NULL;
-			ft_free_tab(tab, var.cote);
 			return(-1);
 		}
 		if (var.ret > 0)
@@ -175,7 +175,6 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			ft_free_tab(tab, var.cote);
 			return (-1);
 		}
-
 		tetro[var.letter] = ft_calcul_place(tetro_r);
 		ft_tetro_read_free(tetro_r);
 		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
@@ -187,7 +186,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			while(var.i < var.letter)
 				ft_backtraking(&tab, tetro, &var.cote, var.i++);
 		}
-		if (var.letter == var.noot - 1)
+		if (var.letter == var.noot - 1 &&  var.ret == 0)
 		{
 			ft_afficher_tab(tab, var.cote);
 			ft_free_tab(tab, var.cote);
@@ -204,7 +203,7 @@ int ft_test(char *line, char **tetro_read, int i, char **tab, int cote)
 {
 	if (ft_strlen(line) != 4)
 	{
-		printf("error");
+		ft_putendl("error");
 		return(-1);
 	}
 	if (ft_vali_tab(line) == -1)
