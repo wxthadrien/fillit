@@ -99,7 +99,6 @@ int main(int argc, char **argv)
 	char	**tab;
 	t_tetro *tetro;
 	char *tetro_read[5];
-	int i = 0;
 
 	var.fd = open(argv[1], O_RDONLY);
 	var.noot = ft_number_of_tetro(var.fd);
@@ -118,10 +117,13 @@ int main(int argc, char **argv)
 
 int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 {
+	int i;
+	i = 0;
 	while (var.ret > 0)
 	{
-		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) > 2)
+		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) == 4)
 		{
+			i = 1;
 			if (ft_test(line, tetro_r, var.i++) == -1)
 			{
 				free(line);
@@ -131,13 +133,20 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			free(line);
 			line = NULL;
 		}
+		if (i == 0)
+		{
+			printf("Ya une couille\n");
+			return (-1);
+		}
+	//	if (blank_test(line) == -1)
+		//	return (-1);
+
 		free(line);
 		line = NULL;
 		if (ft_is_valid(tetro_r) == -1)
 			return (-1);
 		tetro[var.letter] = ft_calcul_place(tetro_r);
 		ft_tetro_read_free(tetro_r);
-		//printf("ok\n");
 		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
 		{
 			var.cote++;
@@ -146,7 +155,6 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			var.i = 0;
 			while(var.i < var.letter)
 				ft_backtraking(&tab, tetro, &var.cote, var.i++);
-
 		}
 		if (var.letter == var.noot - 1)
 		{
@@ -163,6 +171,11 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 
 int ft_test(char *line, char **tetro_read, int i)
 {
+	if (ft_strlen(line) != 4)
+	{
+		printf("error 5\n");
+		return(-1);
+	}
 	if (ft_vali_tab(line) == -1)
 	{
 		ft_putendl("error1");
@@ -176,7 +189,6 @@ int ft_test(char *line, char **tetro_read, int i)
 		line = NULL;
 		return (-1);
 	}
-	//ft_tetro_read_free(tetro_read);
 	return(1);
 }
 
