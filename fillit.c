@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/04 12:57:04 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/04 13:06:36 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,13 @@ int main(int argc, char **argv)
 	close(var.fd);
 	if(!(tab = malloc(sizeof(char*) * var.noot)))
 		return(-1);
+	if(!(tetro = malloc(sizeof(t_tetro*) * 27)))
+		return(-1);
 	var.fd = open(argv[1], O_RDONLY);
 	ft_god(var, line, tab, tetro, tetro_read);
 	close(var.fd);
 	ft_tetro_read_free(tetro_read);
+	free(tetro);
 	return(0);
 }
 
