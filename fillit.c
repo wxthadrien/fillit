@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/04 13:06:36 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/04 13:45:29 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,15 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			printf("Ya une couille\n");
 			return (-1);
 		}
-	//	if (blank_test(line) == -1)
-		//	return (-1);
+
+		if (var.ret > 0)
+		{
+			if (ft_strlen(line) != 0)
+			{
+				printf("error de blank line\n");
+				return (-1);
+			}
+		}
 
 		free(line);
 		line = NULL;
