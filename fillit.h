@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:03:17 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/23 17:02:51 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/05 15:41:48 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_stock
     int   noot;
 }					t_stock;
 
+int        error_return(int cas, char **tab, int cote, char *line);
 char				ft_afficher_tab(char **tab, int cote);
 int					main(int argc, char **argv);
 char				*ft_tab_to_str(char **tab);
