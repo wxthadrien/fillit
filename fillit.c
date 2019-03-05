@@ -226,7 +226,7 @@ int ft_test(char *line, char **tetro_read, int i, char **tab, int cote)
 {
 	if (ft_strlen(line) != 4)
 	{
-		printf("error");
+		ft_putendl("error");
 		return(-1);
 	}
 	if (ft_vali_tab(line) == -1)
@@ -235,14 +235,7 @@ int ft_test(char *line, char **tetro_read, int i, char **tab, int cote)
 		ft_free_tab(tab, cote);
 		return (-1);
 	}
-	if(!(tetro_read[i] = ft_strdup(line)))
-	{
-		ft_putendl("error");
-		ft_tetro_read_free(tetro_read);
-		free(line);
-		line = NULL;
-		return (-1);
-	}
+	tetro_read[i] = ft_strdup(line);
 	return(1);
 }
 
