@@ -45,4 +45,6 @@ int					ft_backtraking(char ***tab, t_tetro *new, int *cote,
 int					ft_check_place(t_tetro new, char **tab, int cote);
 int ft_back(char **tab, int cote, t_tetro *tetro, int letter);
 t_tetro ft_pos(t_calcul pos, t_tetro position_tetro, t_tetro	position_absolue);
+void ft_test_back(char ***tab, int num, t_tetro *new, char **tab2, int *cote, int i);
+int ft_under_back(t_tetro *new, char **tab2, char ***tab, int num, int *cote, int i);
 #endif
