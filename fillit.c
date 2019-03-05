@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/05 09:17:15 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/05 09:32:20 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,9 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 {
 	int i;
 	int y;
+	int tetro_height;
 
+	tetro_height = 0;
 	i = 0;
 	y = 0;
 	while (var.ret > 0)
@@ -135,6 +137,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 		i = 0;
 		while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) == 4)
 		{
+			tetro_height++;
 			i = 1;
 			if (y == 4)
 			{
@@ -154,6 +157,12 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			line = NULL;
 			y++;
 		}
+		if (tetro_height != 4)
+		{
+			ft_putendl("error");
+			return(-1);
+		}
+		tetro_height = 0;
 		y = 0;
 		if (var.ret == -1)
 		{
@@ -216,7 +225,7 @@ int ft_test(char *line, char **tetro_read, int i, char **tab, int cote)
 {
 	if (ft_strlen(line) != 4)
 	{
-		printf("error");
+		ft_putendl("error");
 		return(-1);
 	}
 	if (ft_vali_tab(line) == -1)
