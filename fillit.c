@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/04 13:45:29 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/05 09:17:15 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,28 @@ char	*ft_tab_to_str(char **tab)
 char	ft_afficher_tab(char **tab, int cote)
 {
 	int i;
+	int y;
 
+	y = 0;
 	i = 0;
+
 	while (tab[i] && i < cote)
 	{
-		tab[i][cote] = '\0';
-		ft_putendl(tab[i]);
+		while (tab[i][y] && y < cote)
+		{
+			ft_putchar(tab[i][y]);
+			y++;
+		}
+		ft_putchar('\n');
+		y = 0;
 		i++;
 	}
-	i = 0;
 	return (0);
 }
 
 int ft_tetro_read_free(char **tetro_read)
 {
+
 		int i;
 
 		i = 0;
@@ -130,6 +138,9 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			i = 1;
 			if (y == 4)
 			{
+				free(line);
+				line = NULL;
+				ft_free_tab(tab, var.cote);
 				ft_putendl("error");
 				return(-1);
 			}
@@ -155,6 +166,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			ft_putendl("error");
 			free(line);
 			line = NULL;
+			ft_free_tab(tab, var.cote);
 			return(-1);
 		}
 		if (var.ret > 0)
@@ -175,6 +187,7 @@ int ft_god(t_stock var, char *line, char **tab, t_tetro *tetro, char **tetro_r)
 			ft_free_tab(tab, var.cote);
 			return (-1);
 		}
+
 		tetro[var.letter] = ft_calcul_place(tetro_r);
 		ft_tetro_read_free(tetro_r);
 		while (ft_backtraking(&tab, tetro, &var.cote, var.letter) == -1)
@@ -203,7 +216,7 @@ int ft_test(char *line, char **tetro_read, int i, char **tab, int cote)
 {
 	if (ft_strlen(line) != 4)
 	{
-		ft_putendl("error");
+		printf("error");
 		return(-1);
 	}
 	if (ft_vali_tab(line) == -1)
