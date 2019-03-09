@@ -3,43 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   tetri_valid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmeys <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 13:15:48 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/22 16:50:20 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/08 12:57:15 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "verif.h"
+#include "../fillit.h"
 
-int		ft_tetri_valid(char *tab)
+int		ft_tetri_valid(char *t)
 {
-	int	x;
-	int	point;
-	int	number;
-	int	ok;
+	t_calcul v;
 
-	ok = 0;
-	number = 0;
-	point = 0;
-	x = 0;
-	while (tab[x] && tab[x] != '\n')
+	v.i = 0;
+	v.y = 0;
+	v.p = 0;
+	v.x = 0;
+	while (t[v.x] && t[v.x] != '\n')
 	{
-		if (tab[x] != '.' && tab[x] != '1' && tab[x] != '2' && tab[x] != '3')
+		if (t[v.x] != '.' && t[v.x] != '1' && t[v.x] != '2' && t[v.x] != '3')
 			return (-1);
-		if (tab[x] == '.')
-			point++;
-		if (tab[x] == '1' || tab[x] == '2' || tab[x] == '3')
-			number++;
-		if (tab[x] == '2' || tab[x] == '3')
-			ok = 1;
-		x++;
+		if (t[v.x] == '.')
+			v.p++;
+		if (t[v.x] == '1' || t[v.x] == '2' || t[v.x] == '3')
+			v.y++;
+		if (t[v.x] == '2' || t[v.x] == '3')
+			v.i = 1;
+		v.x++;
 	}
-	if (number != 4 || point != 12 || ok == 0 || ft_strlen(tab) != 16)
+	if (v.y != 4 || v.p != 12 || v.i == 0 || ft_strlen(t) != 16)
 	{
-		free(tab);
+		free(t);
 		return (-1);
 	}
-	free(tab);
+	free(t);
 	return (0);
 }

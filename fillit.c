@@ -6,13 +6,13 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:02:18 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/08 11:36:24 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/09 15:55:02 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		error_return(int cas, char **tab, int cote, char *line)
+int		error_return(int cas, char **tab, int cote, char *line, int balise)
 {
 	if (cas == 2 || cas == 3)
 	{
@@ -24,6 +24,9 @@ int		error_return(int cas, char **tab, int cote, char *line)
 		ft_free_tab(tab, cote);
 	}
 	ft_putendl("error");
+	ft_putstr("no: ");
+	ft_putnbr(balise);
+	ft_putchar('\n');
 	return (-1);
 }
 
@@ -185,34 +188,28 @@ int		ft_read(t_stock var, char *line, char **tab, char **tetro_r)
 	while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) == 4)
 	{
 		if (y == 4)
-			return (error_return(3, tab, var.cote, line));
+			return (error_return(3, tab, var.cote, line, 1));
 		if (ft_test(line, tetro_r, &var, tab) == -1)
-			return (error_return(2, tab, var.cote, line));
+			return (error_return(2, tab, var.cote, line, 2));
 		ft_strdel(&line);
 		y++;
 	}
 	if (var.ret == -1)
-		return (error_return(0, tab, var.cote, line));
+		return (error_return(1, tab, var.cote, line, 3));
 	if (y == 0)
-		return (error_return(3, tab, var.cote, line));
+		return ((var.ret == 1) ? error_return(3, tab, var.cote, line, 8) : error_return(1, tab, var.cote, line, 4));
 	if (var.ret > 0)
 		if (ft_strlen(line) != 0)
-			return (error_return(3, tab, var.cote, line));
-	free(line);
-	line = NULL;
+			return (error_return(3, tab, var.cote, line, 5));
+	ft_strdel(&line);
 	if (y != 4)
-		return (error_return(1, tab, var.cote, line));
+		return (error_return(1, tab, var.cote, line, 6));
 	y = 0;
 	return (var.ret);
 }
 
 int		ft_test(char *line, char **tetro_read, t_stock *var, char **tab)
 {
-	if (ft_strlen(line) != 4)
-	{
-		ft_putendl("error");
-		return (-1);
-	}
 	if (ft_vali_tab(line) == -1)
 	{
 		ft_free_tab(tab, var->cote);
@@ -227,7 +224,7 @@ int		ft_is_valid(char **tetro_read)
 {
 	if (ft_tetri_valid(ft_tab_to_str(ft_tab_converter(tetro_read))) != 0)
 	{
-		ft_putendl("error");
+		ft_putendl("error \nno: 7");
 		return (-1);
 	}
 	return (1);

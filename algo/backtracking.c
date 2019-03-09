@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 12:28:48 by hmeys             #+#    #+#             */
-/*   Updated: 2019/02/22 17:05:33 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/08 14:47:10 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int		ft_check_place(t_tetro new, char **tab, int cote)
 {
-	t_calcul p = {0};
+	t_calcul p;
 
+	p.i = 0;
 	while (p.i < 4)
 	{
-		if ((new.h[p.i].x + new.p0x) == cote || (new.h[p.i].y + new.p0y) == cote)
+		if ((new.h[p.i].x + new.p0x) == cote ||\
+			(new.h[p.i].y + new.p0y) == cote)
 			return (-1);
 		p.i++;
 	}
@@ -41,65 +43,68 @@ int		ft_check_place(t_tetro new, char **tab, int cote)
 
 int		ft_backtraking(char ***tab, t_tetro *new, int *cote, int num)
 {
-	int i;
-	char **tab2;
+	char	**tab2;
+	t_calcul coord;
 
-	i = 0;
+	coord.cote = cote;
+	coord.i = 0;
 	tab2 = *tab;
 	if (num < 0)
 		return (-1);
-	while (ft_check_place(new[num], tab2, *cote) == -1)
+	while (ft_check_place(new[num], tab2, *coord.cote) == -1)
 	{
-		if(ft_under_back(new, tab2, tab, num, cote, i) == -1)
-			return(-1);
+		coord.x = num;
+		if (ft_under_back(new, tab2, tab, coord) == -1)
+			return (-1);
 	}
-	while (i <  4)
+	while (coord.i < 4)
 	{
-		tab2[new[num].p0x + new[num].h[i].x][new[num].p0y + new[num].h[i].y] = ft_hashtag_to_letter(num);
-		i++;
+		tab2[new[num].p0x + new[num].h[coord.i].x][new[num].p0y +\
+			new[num].h[coord.i].y] = ft_hashtag_to_letter(num);
+		coord.i++;
 	}
 	return (0);
 }
 
-void ft_test_back(char ***tab, int num, t_tetro *new, char **tab2, int *cote, int i)
+void	ft_test_back(char ***tab, t_tetro *new, char **tab2, t_calcul coord)
 {
-	while (i <  4)
+	while (coord.i < 4)
 	{
-		tab2[new[num - 1].p0x + new[num - 1].h[i].x]\
-		[new[num - 1].p0y + new[num - 1].h[i].y] = '.';
-		i++;
+		tab2[new[coord.x - 1].p0x + new[coord.x - 1].h[coord.i].x]\
+			[new[coord.x - 1].p0y + new[coord.x - 1].h[coord.i].y] = '.';
+		coord.i++;
 	}
-	i = 0;
-	if (new[num - 1].p0y < (*cote - 1))
-		new[num - 1].p0y++;
-	else if (new[num - 1].p0x < (*cote - 1))
+	coord.i = 0;
+	if (new[coord.x - 1].p0y < (*coord.cote - 1))
+		new[coord.x - 1].p0y++;
+	else if (new[coord.x - 1].p0x < (*coord.cote - 1))
 	{
-		new[num - 1].p0y = 0;
-		new[num - 1].p0x++;
+		new[coord.x - 1].p0y = 0;
+		new[coord.x - 1].p0x++;
 	}
 }
 
-int ft_under_back(t_tetro *new, char **tab2, char ***tab, int num, int *cote, int i)
+int		ft_under_back(t_tetro *new, char **tab2, char ***tab, t_calcul coord)
 {
-	if (new[num].p0y < (*cote - 1))
-		new[num].p0y++;
-	else if (new[num].p0x < (*cote - 1))
+	if (new[coord.x].p0y < (*coord.cote - 1))
+		new[coord.x].p0y++;
+	else if (new[coord.x].p0x < (*coord.cote - 1))
 	{
-		new[num].p0y = 0;
-		new[num].p0x++;
+		new[coord.x].p0y = 0;
+		new[coord.x].p0x++;
 	}
 	else
 	{
-		if (num == 0)
+		if (coord.x == 0)
 			return (-1);
-		ft_test_back(tab, num, new, tab2, cote, i);
-		if (ft_backtraking(tab, new, cote, num - 1) == -1)
+		ft_test_back(tab, new, tab2, coord);
+		if (ft_backtraking(tab, new, coord.cote, coord.x - 1) == -1)
 			return (-1);
 		else
 		{
-			new[num].p0y = 0;
-			new[num].p0x = 0;
+			new[coord.x].p0y = 0;
+			new[coord.x].p0x = 0;
 		}
 	}
-	return(0);
+	return (0);
 }
