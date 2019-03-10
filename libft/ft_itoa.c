@@ -36,6 +36,5 @@ char	*ft_itoa(int n)
 	r[i] = '\0';
 	while (i--)
 		r[i] = ret[j++];
-
 	return (r);
 }

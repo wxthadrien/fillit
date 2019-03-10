@@ -6,11 +6,40 @@
 #    By: hmeys <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/02 13:41:34 by hmeys             #+#    #+#              #
-#    Updated: 2019/03/05 09:17:51 by hmeys            ###   ########.fr        #
+#    Updated: 2019/03/10 18:33:05 by losuna-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-all:
-	cd libft && make && cd ..
-	gcc -o fillit fillit.c get_next_line/get_next_line.c libft/libft.a verif/vali_tab.c verif/verif.c algo/algo.c verif/tetri_valid.c algo/backtracking.c
-	cd libft && make fclean
+NAME=fillit
+
+FLAGS += -Wall -Wextra -Werror
+FLAGS += -I libft/
+
+SOURCES=main.c agrandir.c algo.c backtracking.c read.c test.c\
+		tetri.c verif.c
+OFILES=main.o agrandir.o algo.o backtracking.o read.o test.o\
+	   tetri.o verif.o
+LIBFT = libft/libft.a
+
+.PHONY: all, clean, fclean, re
+
+all: $(NAME)
+
+$(OBJ): %.o: %.c
+	@gcc -c $(CFLAGS) $< -o $@
+
+$(LIBFT):
+	@make -C libft
+
+$(NAME): $(LIBFT) $(OFILE)
+	gcc $(SOURCES) $(OBJ) $(LIBFT) -o $(NAME)
+
+clean:
+	rm -f $(OFILES)
+	@make -C libft clean
+
+fclean: clean
+	rm -f $(NAME)
+	@make -C libft fclean
+
+re: fclean all
