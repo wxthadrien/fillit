@@ -24,7 +24,7 @@ int		ft_tetri_valid(char *t)
 	while (t[v.x] && t[v.x] != '\n')
 	{
 		if (t[v.x] != '.' && t[v.x] != '1' && t[v.x] != '2' && t[v.x] != '3')
-			return (-1);
+			return (ft_free(t));
 		if (t[v.x] == '.')
 			v.p++;
 		if (t[v.x] == '1' || t[v.x] == '2' || t[v.x] == '3')
@@ -34,10 +34,7 @@ int		ft_tetri_valid(char *t)
 		v.x++;
 	}
 	if (v.y != 4 || v.p != 12 || v.i == 0 || ft_strlen(t) != 16)
-	{
-		free(t);
-		return (-1);
-	}
+		return (ft_free(t));
 	free(t);
 	return (0);
 }

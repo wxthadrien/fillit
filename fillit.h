@@ -34,7 +34,7 @@ typedef struct		s_stock
 	char			*line;
 }					t_stock;
 
-int					error_return(int cas, char **tab, int cote, char *line, int balise);
+int					error_return(int cas, char **tab, int cote, char *line);
 char				ft_afficher_tab(char **tab, int cote);
 int					main(int argc, char **argv);
 char				*ft_tab_to_str(char **tab);
@@ -50,5 +50,6 @@ int					ft_god(t_stock var, char **tab, t_tetro *tetro,\
 int					ft_test(char *line, char **tetro_read, t_stock *var,\
 		char **tab);
 void				ft_result(char **tab, t_stock *var);
+int ft_free(char *s);
 
 #endif
