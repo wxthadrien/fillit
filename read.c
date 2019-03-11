@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: losuna-b <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: losuna-b <losuna-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 18:41:16 by losuna-b          #+#    #+#             */
-/*   Updated: 2019/03/10 18:51:17 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/11 11:36:28 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int		ft_read(t_stock var, char *line, char **tab, char **tetro_r)
 	if (var.ret == -1)
 		return (error_return(0, tab, var.cote, line));
 	if (y == 0)
-		return ((var.ret == 1) ? error_return(3, tab, var.cote, line) : error_return(1, tab, var.cote, line));
+		return ((var.ret == 1) ? error_return(3, tab, var.cote, line) : \
+				error_return(1, tab, var.cote, line));
 	if (var.ret > 0)
 		if (ft_strlen(line) != 0)
 			return (error_return(3, tab, var.cote, line));
-	free(line);
-	line = NULL;
+	ft_strdel(&line);
 	if (y != 4)
 		return (error_return(1, tab, var.cote, line));
 	y = 0;
