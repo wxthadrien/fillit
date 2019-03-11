@@ -6,7 +6,7 @@
 /*   By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:03:17 by hmeys             #+#    #+#             */
-/*   Updated: 2019/03/10 18:53:50 by losuna-b         ###   ########.fr       */
+/*   Updated: 2019/03/11 13:08:17 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct		s_calcul
 }					t_calcul;
 
 char				**ft_next_tab(t_stock *var, t_tetro *tetro, char **tab);
-int					error_return(int cas, char **tab, int cote, char *line);
+int					er(int cas, char **tab, int cote, char *line);
 char				ft_afficher_tab(char **tab, int cote);
 int					main(int argc, char **argv);
 char				*ft_tab_to_str(char **tab);
@@ -63,7 +63,7 @@ void				ft_clean_struct(t_tetro *tetro, int num);
 int					ft_number_of_tetro(int fd);
 int					ft_is_valid(char **tetro_read);
 int					ft_tetro_read_free(char **tetro_read);
-int					ft_read(t_stock var, char *line, char **tab,\
+int					ft_read(t_stock v, char *ln, char **tab,\
 					char **tetro_r);
 int					ft_god(t_stock var, char **tab, t_tetro *tetro,\
 					char **tetro_r);

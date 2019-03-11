@@ -1,19 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: hmeys <hmeys@student.42.fr>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/02/02 13:41:34 by hmeys             #+#    #+#              #
-#    Updated: 2019/03/11 11:24:48 by hmeys            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME=fillit
 
-FLAGS += -Wall -Wextra -Werror
-FLAGS += -I libft/
+FLAGS=-Wall -Wextra -Werror
 
 SOURCES=main.c agrandir.c algo.c backtracking.c read.c test.c\
 		tetri.c verif.c
@@ -25,21 +12,25 @@ LIBFT = libft/libft.a
 
 all: $(NAME)
 
-$(OBJ): %.o: %.c
-	@gcc -c $(CFLAGS) $< -o $@
+make_libft:
+		cd libft && make && cd ..
 
-$(LIBFT):
-	@make -C libft
+libft_clean:
+	cd libft && make clean
 
-$(NAME): $(LIBFT) $(OFILE)
-	gcc $(SOURCES) $(OBJ) $(LIBFT) -o $(NAME)
+libft_fclean:
+		cd libft && make fclean
 
-clean:
+obj:
+			@gcc $(CFLAGS) -c $(SOURCES)
+
+$(NAME): make_libft obj
+		gcc $(OFILES) $(LIBFT) -o $(NAME)
+
+clean: libft_clean
 	rm -f $(OFILES)
-	@make -C libft clean
 
-fclean: clean
+fclean: clean libft_fclean
 	rm -f $(NAME)
-	@make -C libft fclean
 
 re: fclean all

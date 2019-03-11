@@ -6,39 +6,38 @@
 /*   By: losuna-b <losuna-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 18:41:16 by losuna-b          #+#    #+#             */
-/*   Updated: 2019/03/11 11:36:28 by hmeys            ###   ########.fr       */
+/*   Updated: 2019/03/11 13:07:52 by hmeys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		ft_read(t_stock var, char *line, char **tab, char **tetro_r)
+int		ft_read(t_stock v, char *ln, char **tab, char **tetro_r)
 {
 	int y;
 
 	y = 0;
-	while ((var.ret = get_next_line(var.fd, &line)) > 0 && ft_strlen(line) == 4)
+	while ((v.ret = get_next_line(v.fd, &ln)) > 0 && ft_strlen(ln) == 4)
 	{
 		if (y == 4)
-			return (error_return(3, tab, var.cote, line));
-		if (ft_test(line, tetro_r, &var, tab) == -1)
-			return (error_return(2, tab, var.cote, line));
-		ft_strdel(&line);
+			return (er(3, tab, v.cote, ln));
+		if (ft_test(ln, tetro_r, &v, tab) == -1)
+			return (er(2, tab, v.cote, ln));
+		ft_strdel(&ln);
 		y++;
 	}
-	if (var.ret == -1)
-		return (error_return(0, tab, var.cote, line));
+	if (v.ret == -1)
+		return (er(0, tab, v.cote, ln));
 	if (y == 0)
-		return ((var.ret == 1) ? error_return(3, tab, var.cote, line) : \
-				error_return(1, tab, var.cote, line));
-	if (var.ret > 0)
-		if (ft_strlen(line) != 0)
-			return (error_return(3, tab, var.cote, line));
-	ft_strdel(&line);
+		return ((v.ret == 1) ? er(3, tab, v.cote, ln) : er(1, tab, v.cote, ln));
+	if (v.ret > 0)
+		if (ft_strlen(ln) != 0)
+			return (er(3, tab, v.cote, ln));
+	ft_strdel(&ln);
 	if (y != 4)
-		return (error_return(1, tab, var.cote, line));
+		return (er(1, tab, v.cote, ln));
 	y = 0;
-	return (var.ret);
+	return (v.ret);
 }
 
 char	ft_afficher_tab(char **tab, int cote)
@@ -83,7 +82,7 @@ int		ft_free(char *s)
 	return (-1);
 }
 
-int		error_return(int cas, char **tab, int cote, char *line)
+int		er(int cas, char **tab, int cote, char *line)
 {
 	if (cas == 2 || cas == 3)
 	{
